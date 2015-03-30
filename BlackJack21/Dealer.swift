@@ -27,6 +27,10 @@ class Dealer {
         get{
             var tempCount : Int = 0
             for card in dealerHand {
+                if(card>10){
+                    tempCount += 10
+                    continue
+                }
                 tempCount += card
             }
             //handSum = tempCount

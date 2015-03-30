@@ -20,7 +20,7 @@ class Deck {
         //Validation for number of cards
         var Suit = ["Spades","Hearts","Diamonds" , "Clubs"]
         //var Card = ["1","2","3","4","5","6","7","8","9","10","10","10","10"]
-        var Card = [1,2,3,4,5,6,7,8,9,10,10,10,10]
+        var Card = [1,2,3,4,5,6,7,8,9,10,11,12,13]
         
         for i in 1...noOfDecks
         {

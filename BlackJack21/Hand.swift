@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 NYU. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Hand {
     
@@ -30,6 +30,10 @@ class Hand {
             for card in cardsInHand {
                 if(card == 1){
                     acePresent = true
+                }
+                if(card>10){
+                   tempCount += 10
+                    continue
                 }
                 tempCount += card
             }
@@ -88,5 +92,5 @@ class Hand {
         }
         return tempString
     }
-    
+
 }
