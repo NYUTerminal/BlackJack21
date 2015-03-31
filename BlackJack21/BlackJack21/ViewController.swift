@@ -13,27 +13,15 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var gameState: UILabel!
     
-    @IBOutlet weak var player5Cards: UILabel!
-    
-    @IBOutlet weak var player4Cards: UILabel!
-    
-    @IBOutlet weak var player3Cards: UILabel!
-    
-    @IBOutlet weak var player2cards: UILabel!
-    
     @IBOutlet weak var player1Cards: UILabel!
     
-    @IBOutlet weak var player1Bet: UITextField!
+    @IBOutlet weak var player1Bet: UILabel!
     
-    @IBOutlet weak var player2Bet: UITextField!
+    @IBOutlet weak var player2Bet: UILabel!
     
-    @IBOutlet weak var player3Bet: UITextField!
+    @IBOutlet weak var balance1: UILabel!
     
-    @IBOutlet weak var player4Bet: UITextField!
-    
-    @IBOutlet weak var player5Bet: UITextField!
-    
-    @IBOutlet weak var balance: UILabel!
+    @IBOutlet weak var balance2: UILabel!
     
     @IBOutlet weak var dealerCards: UILabel!
     
@@ -54,6 +42,11 @@ class ViewController: UIViewController {
     var maxBalanceForPlayer:Double = 0
     
     var clearedPlayerVIew1 : UIView!
+    
+    var bet1 = 0
+    
+    var bet2 = 0
+    
     
     // GUI things
     
@@ -185,40 +178,40 @@ class ViewController: UIViewController {
         }
     }
     
-    func getBet(index : Int) -> Int {
-        switch index{
-        case 1:
-            return player1Bet.text.toInt()!
-        case 2:
-            return player2Bet.text.toInt()!
-        case 3:
-            return player3Bet.text.toInt()!
-        case 4:
-            return player4Bet.text.toInt()!
-        case 5:
-            return player5Bet.text.toInt()!
-        default:
-            return 0
-        }
-    }
+    //    func getBet(index : Int) -> Int {
+    //        switch index{
+    //        case 1:
+    //            return player1Bet.text.toInt()!
+    //        case 2:
+    //            return player2Bet.text.toInt()!
+    //        case 3:
+    //            return player3Bet.text.toInt()!
+    //        case 4:
+    //            return player4Bet.text.toInt()!
+    //        case 5:
+    //            return player5Bet.text.toInt()!
+    //        default:
+    //            return 0
+    //        }
+    //    }
     
     
-    func getLabelsOnIndex(index : Int) -> UILabel {
-        switch index{
-        case 1:
-            return player1Cards
-        case 2:
-            return player2cards
-        case 3:
-            return player3Cards
-        case 4:
-            return player4Cards
-        case 5:
-            return player5Cards
-        default:
-            return player1Cards
-        }
-    }
+    //    func getLabelsOnIndex(index : Int) -> UILabel {
+    //        switch index{
+    //        case 1:
+    //            return player1Cards
+    //        case 2:
+    //            return player2cards
+    //        case 3:
+    //            return player3Cards
+    //        case 4:
+    //            return player4Cards
+    //        case 5:
+    //            return player5Cards
+    //        default:
+    //            return player1Cards
+    //        }
+    //    }
     
     func showViewItems(){
         var index:Int = 1;
@@ -275,15 +268,15 @@ class ViewController: UIViewController {
     
     func clearAllItemsOnScreen() {
         //for i in 1...5{
-            playerList = []
-            //getLabelsOnIndex(i).text = ""
-            //dealerCards.text = ""
-            dealer = Dealer()
-            //            player1Bet.text = ""
-            //            player2Bet.text = ""
-            //            player3Bet.text = ""
-            //            player4Bet.text = ""
-            //            player5Bet.text = ""
+        playerList = []
+        //getLabelsOnIndex(i).text = ""
+        //dealerCards.text = ""
+        dealer = Dealer()
+        //            player1Bet.text = ""
+        //            player2Bet.text = ""
+        //            player3Bet.text = ""
+        //            player4Bet.text = ""
+        //            player5Bet.text = ""
         //}
         
     }
@@ -360,22 +353,80 @@ class ViewController: UIViewController {
         
         let helper = ViewControllerHelper()
         //if(addAllCards){
-            for i in 1...cardsInHand.count{
-                if(i==1){
-                    let newCardView : UIView = helper.createCardSubView(x , y:0,width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
-                    parentView.addSubview(newCardView)
-                    continue
-                }else{
-                    let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
-                    parentView.addSubview(newCardView)
-                }
+        for i in 1...cardsInHand.count{
+            if(i==1){
+                let newCardView : UIView = helper.createCardSubView(x , y:0,width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
+                parentView.addSubview(newCardView)
+                continue
+            }else{
+                let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
+                parentView.addSubview(newCardView)
             }
+        }
         //}
-//        else{
-//            var lastIndex = cardsInHand.count
-//            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[lastIndex-1]))
-//            parentView.addSubview(newCardView)
-//        }
+        //        else{
+        //            var lastIndex = cardsInHand.count
+        //            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[lastIndex-1]))
+        //            parentView.addSubview(newCardView)
+        //        }
     }
+    
+    
+    
+    
+    @IBAction func clearBet2(sender: UIButton) {
+        bet2 = 0
+        player2Bet.text = "0 (Total Bet)"
+    }
+    
+    
+    @IBAction func clearBet1(sender: UIButton) {
+        bet1 = 0
+        player1Bet.text = "0 (Total Bet)"
+    }
+    
+    @IBAction func bet1P1(sender: UIButton) {
+        bet1 = bet1 + 1
+        player1Bet.text =  String(bet1)
+    }
+    
+    @IBAction func bet5P1(sender: UIButton) {
+        bet1 = bet1 + 5
+        player1Bet.text =  String(bet1)
+    }
+    
+    @IBAction func bet10P1(sender: UIButton) {
+        bet1 = bet1 + 10
+        player1Bet.text =  String(bet1)
+    }
+    
+    @IBAction func bet50P1(sender: UIButton) {
+        bet1 = bet1 + 50
+        player1Bet.text =  String(bet1)
+    }
+    
+    @IBAction func bet1P2(sender: UIButton) {
+        bet2 = bet2 + 1
+        player2Bet.text =  String(bet2)
+    }
+    
+    @IBAction func bet5P2(sender: UIButton) {
+        bet2 = bet2 + 5
+        player2Bet.text =  String(bet2)
+    }
+    
+    @IBAction func bet10P2(sender: UIButton) {
+        bet2 = bet2 + 10
+        player2Bet.text =  String(bet2)
+    }
+    
+    @IBAction func bet50P2(sender: UIButton) {
+        bet2 = bet2 + 50
+        player2Bet.text =  String(bet2)
+    }
+    
+    
+    
+    
 }
 
