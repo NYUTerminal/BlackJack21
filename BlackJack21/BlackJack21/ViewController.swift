@@ -63,9 +63,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var dealerCard1View: UIImageView!
     @IBOutlet weak var dealerHandView: UIView!
     @IBOutlet weak var cardContainerView: UIView!
+    var backUpPlayerCard1View = UIView()
+    var backUpPlayerCard2View = UIView()
+    var playerHandViewBackUP = UIView()
     //
     
     override func viewDidLoad() {
+        playerHandViewBackUP  = playerHandView;
         super.viewDidLoad()
         clearedPlayerVIew1 = playerHandView
         // ViewControllerHelper.createCardSubView(ViewControllerHelper)
@@ -88,7 +92,7 @@ class ViewController: UIViewController {
                 if(i==1){
                     addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: true, currentView: playerCard1View , addAllCards: false)
                 }else{
-                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: true, currentView: playerCard2View , addAllCards: false)
+                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: playerCard2View , addAllCards: false)
                 }
                 if(hand.handSum == 21){
                     playerList[i-1].hand.handStatus = HandStatus.BlackJack
@@ -140,11 +144,21 @@ class ViewController: UIViewController {
     
     
     @IBAction func deal(sender: UIButton) {
-        //clearAllItemsOnScreen()
+        clearAllItemsOnScreen()
         if numberOfGamesPlayed%5 == 0 {
             deck.buildDeck(numberOfDecks)
         }
-        
+        //        for i in 1...playerHandView.subviews.count-1 {
+        //            println(playerHandView.subviews[i])
+        //            //playerHandView.subviews[i]=nil
+        //        }
+        //
+        //        for subview in playerHandView.subviews {
+        //                println(subview)
+        //                subview.removeFromSuperview()
+        //        }
+        //        playerHandView.addSubview(backUpPlayerCard1View)
+        //        playerHandView.addSubview(backUpPlayerCard2View)
         //Initializing with for loop . Based on number of players
         dealer.initializeDealer()
         numberOfGamesPlayed++;
@@ -229,7 +243,7 @@ class ViewController: UIViewController {
         var tempString = ""
         let widthStandard = 50
         let heightStandard = 75
-        let xoffSet : CGFloat = CGFloat(15)
+        let xoffSet : CGFloat = CGFloat(20)
         let yoffSet : CGFloat = CGFloat(0)
         let dealerFrame = dealerCard1View.frame.size
         println(dealerFrame)
@@ -260,17 +274,17 @@ class ViewController: UIViewController {
     }
     
     func clearAllItemsOnScreen() {
-        for i in 1...5{
+        //for i in 1...5{
             playerList = []
-            getLabelsOnIndex(i).text = ""
-            dealerCards.text = ""
+            //getLabelsOnIndex(i).text = ""
+            //dealerCards.text = ""
             dealer = Dealer()
             //            player1Bet.text = ""
             //            player2Bet.text = ""
             //            player3Bet.text = ""
             //            player4Bet.text = ""
             //            player5Bet.text = ""
-        }
+        //}
         
     }
     
@@ -333,11 +347,11 @@ class ViewController: UIViewController {
         var yoffSet : CGFloat = 0
         var currentStart = currentView.frame.size
         if(isPlayerView){
-            xoffSet = CGFloat(15)
-            yoffSet = CGFloat(15)
+            xoffSet = CGFloat(25)
+            yoffSet = CGFloat(25)
         }else{
-            xoffSet = CGFloat(-15)
-            yoffSet = CGFloat(15)
+            xoffSet = CGFloat(-25)
+            yoffSet = CGFloat(25)
         }
         var width1 = currentStart.width
         var height1 = currentStart.height
@@ -345,7 +359,7 @@ class ViewController: UIViewController {
         var y = currentView.frame.origin.y
         
         let helper = ViewControllerHelper()
-        if(addAllCards){
+        //if(addAllCards){
             for i in 1...cardsInHand.count{
                 if(i==1){
                     let newCardView : UIView = helper.createCardSubView(x , y:0,width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
@@ -356,11 +370,12 @@ class ViewController: UIViewController {
                     parentView.addSubview(newCardView)
                 }
             }
-        }else{
-            var lastIndex = cardsInHand.count
-            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[lastIndex-1]))
-            parentView.addSubview(newCardView)
-        }
+        //}
+//        else{
+//            var lastIndex = cardsInHand.count
+//            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[lastIndex-1]))
+//            parentView.addSubview(newCardView)
+//        }
     }
 }
 
