@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB95BA291ACB239B00DDEB65 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA281ACB239B00DDEB65 /* Firebase.framework */; };
+		CB95BA2B1ACB23DC00DDEB65 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA2A1ACB23DC00DDEB65 /* libicucore.dylib */; };
+		CB95BA2D1ACB23E400DDEB65 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA2C1ACB23E400DDEB65 /* libc++.dylib */; };
+		CB95BA2F1ACB23F200DDEB65 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA2E1ACB23F200DDEB65 /* CFNetwork.framework */; };
+		CB95BA311ACB23FC00DDEB65 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA301ACB23FC00DDEB65 /* Security.framework */; };
+		CB95BA331ACB240500DDEB65 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB95BA321ACB240500DDEB65 /* SystemConfiguration.framework */; };
 		CBAB40511ABE4B4700F5FC96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB40501ABE4B4700F5FC96 /* AppDelegate.swift */; };
 		CBAB40531ABE4B4700F5FC96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAB40521ABE4B4700F5FC96 /* ViewController.swift */; };
 		CBAB40561ABE4B4700F5FC96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBAB40541ABE4B4700F5FC96 /* Main.storyboard */; };
@@ -60,6 +66,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB95BA281ACB239B00DDEB65 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		CB95BA2A1ACB23DC00DDEB65 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		CB95BA2C1ACB23E400DDEB65 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		CB95BA2E1ACB23F200DDEB65 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		CB95BA301ACB23FC00DDEB65 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CB95BA321ACB240500DDEB65 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CB95BA341ACB249E00DDEB65 /* BlackJack21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlackJack21-Bridging-Header.h"; sourceTree = "<group>"; };
 		CBAB404B1ABE4B4700F5FC96 /* BlackJack21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackJack21.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBAB404F1ABE4B4700F5FC96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBAB40501ABE4B4700F5FC96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +125,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB95BA331ACB240500DDEB65 /* SystemConfiguration.framework in Frameworks */,
+				CB95BA311ACB23FC00DDEB65 /* Security.framework in Frameworks */,
+				CB95BA2F1ACB23F200DDEB65 /* CFNetwork.framework in Frameworks */,
+				CB95BA2D1ACB23E400DDEB65 /* libc++.dylib in Frameworks */,
+				CB95BA2B1ACB23DC00DDEB65 /* libicucore.dylib in Frameworks */,
+				CB95BA291ACB239B00DDEB65 /* Firebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,10 +147,17 @@
 		CBAB40421ABE4B4600F5FC96 = {
 			isa = PBXGroup;
 			children = (
+				CB95BA321ACB240500DDEB65 /* SystemConfiguration.framework */,
+				CB95BA301ACB23FC00DDEB65 /* Security.framework */,
+				CB95BA2E1ACB23F200DDEB65 /* CFNetwork.framework */,
+				CB95BA2C1ACB23E400DDEB65 /* libc++.dylib */,
+				CB95BA2A1ACB23DC00DDEB65 /* libicucore.dylib */,
+				CB95BA281ACB239B00DDEB65 /* Firebase.framework */,
 				CBC1BA8E1AC757440053910F /* Spring */,
 				CBAB404D1ABE4B4700F5FC96 /* BlackJack21 */,
 				CBAB40631ABE4B4700F5FC96 /* BlackJack21Tests */,
 				CBAB404C1ABE4B4700F5FC96 /* Products */,
+				CB95BA341ACB249E00DDEB65 /* BlackJack21-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -510,9 +536,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BlackJack21/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BlackJack21-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -520,9 +554,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BlackJack21/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BlackJack21-Bridging-Header.h";
 			};
 			name = Release;
 		};
