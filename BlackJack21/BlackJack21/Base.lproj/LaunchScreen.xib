@@ -10,15 +10,14 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 NYU. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unnamed.png" translatesAutoresizingMaskIntoConstraints="NO" id="uFf-HH-uOc">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="V7b-eu-HmG">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unnamed.png" translatesAutoresizingMaskIntoConstraints="NO" id="uFf-HH-uOc" userLabel="LaunchLogo">
+                    <rect key="frame" x="40" y="40" width="400" height="400"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="400" id="BlI-nR-O8U"/>
+                        <constraint firstAttribute="height" constant="400" id="HR7-9D-AUF"/>
                         <constraint firstAttribute="height" constant="500" id="ZVT-Nk-XDZ"/>
                         <constraint firstAttribute="width" constant="600" id="br6-JL-5Xd"/>
                     </constraints>
@@ -29,23 +28,44 @@
                         </mask>
                     </variation>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="  Copyright (c) 2015 NYU. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="20" y="448" width="440" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="uFf-HH-uOc" secondAttribute="trailing" id="BBF-EM-NV2"/>
+                <constraint firstItem="V7b-eu-HmG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Bko-Yi-Yh7"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstAttribute="centerX" secondItem="uFf-HH-uOc" secondAttribute="centerX" id="SoK-HU-aij"/>
                 <constraint firstItem="uFf-HH-uOc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yny-Hf-1FI"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstItem="V7b-eu-HmG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aek-3V-CE1"/>
+                <constraint firstAttribute="bottom" secondItem="V7b-eu-HmG" secondAttribute="bottom" id="gVk-dL-Kk8"/>
                 <constraint firstAttribute="bottom" secondItem="uFf-HH-uOc" secondAttribute="bottom" id="kfd-sZ-zNl"/>
                 <constraint firstItem="uFf-HH-uOc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mIU-xV-Q4S"/>
+                <constraint firstAttribute="trailing" secondItem="V7b-eu-HmG" secondAttribute="trailing" id="qR8-nc-1cE"/>
+                <constraint firstAttribute="centerY" secondItem="uFf-HH-uOc" secondAttribute="centerY" id="zz1-yx-Ims"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="BBF-EM-NV2"/>
+                    <exclude reference="Yny-Hf-1FI"/>
+                    <exclude reference="kfd-sZ-zNl"/>
+                    <exclude reference="mIU-xV-Q4S"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
     <resources>
+        <image name="background" width="667" height="622"/>
         <image name="unnamed.png" width="1280" height="720"/>
     </resources>
 </document>

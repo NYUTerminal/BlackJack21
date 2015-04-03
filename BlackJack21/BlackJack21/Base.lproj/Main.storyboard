@@ -66,7 +66,6 @@
                                         </variation>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="AjG-Sv-u7l" secondAttribute="trailing" constant="5" id="Djk-L0-qtP"/>
                                     <constraint firstAttribute="centerX" secondItem="AjG-Sv-u7l" secondAttribute="centerX" id="E6w-UM-2ZI"/>
@@ -114,7 +113,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.4214212437" green="0.4214212437" blue="0.4214212437" alpha="0.55000000000000004" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8mA-ys-FWL"/>
                                     <constraint firstAttribute="centerY" secondItem="UzD-ZS-Qgk" secondAttribute="centerY" constant="-2" id="IXG-St-7Jm"/>
@@ -199,7 +198,6 @@
                                         </variation>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="DoG-wa-PuZ" secondAttribute="centerX" id="LKP-0h-WZH"/>
                                     <constraint firstAttribute="centerY" secondItem="DoG-wa-PuZ" secondAttribute="centerY" id="Vz8-CK-KuK"/>
