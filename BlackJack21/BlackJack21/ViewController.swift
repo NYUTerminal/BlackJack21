@@ -51,6 +51,10 @@ class ViewController: UIViewController {
     
     var length = CGFloat(0)
     
+    var offSet = CGFloat(0)
+    
+    var tempSubViews :[UIView]  = []
+    
     // GUI things
     
     @IBOutlet weak var playerHandView: UIView!
@@ -71,9 +75,11 @@ class ViewController: UIViewController {
         if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
             width = 50
             length = 75
+            offSet = 15
         }else{
             width = 120
             length = 170
+            offSet = 30
         }
         clearedPlayerVIew1 = playerHandView
         // ViewControllerHelper.createCardSubView(ViewControllerHelper)
@@ -265,24 +271,19 @@ class ViewController: UIViewController {
     }
     
     func clearAllItemsOnScreen() {
-        //        if(playerHandView.subviews.count>2){
-        //            playerList[i].hand.cardsInHand.count
-        //            playerHandView.subviews[]
-        //            for i in 1...playerList.count{
-        //                if(playerList[i].hand.cardsInHand.count>0){
-        //                    for j in 1...playerList[i].hand.cardsInHand.count{
-        //                        if(j != 1){
-        //                            playerHandView.subviews[] = nil
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        for view in self.view.subviews {
-            println(view)
+        var index = 0
+        if tempSubViews.count > 0{
+            for subUIView in playerHandView.subviews as [UIView] {
+                for i in 1...tempSubViews.count{
+                    if(subUIView as NSObject == tempSubViews[i-1]){
+                        subUIView.removeFromSuperview()
+                    }
+                }
+            }
         }
         //for i in 1...5{
         playerList = []
+        tempSubViews = []
         //getLabelsOnIndex(i).text = ""
         //dealerCards.text = ""
         dealer = Dealer()
@@ -352,34 +353,37 @@ class ViewController: UIViewController {
         var currentStart = currentView.frame.size
         
         if(isPlayerView){
-            xoffSet = CGFloat(15)
-            yoffSet = CGFloat(15)
+            xoffSet = CGFloat(offSet)
+            yoffSet = CGFloat(offSet)
             x = x + CGFloat(20)
             y = y + CGFloat(0)
         }else{
             x = x - width
-            xoffSet = CGFloat(-15)
-            yoffSet = CGFloat(15)
+            xoffSet = CGFloat(-offSet)
+            yoffSet = CGFloat(offSet)
         }
         
         let helper = ViewControllerHelper()
-        //if(addAllCards){
-        for i in 1...cardsInHand.count{
-            if(i==1){
-                let newCardView : UIView = helper.createCardSubView(x , y:0,width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
-                parentView.addSubview(newCardView)
-                continue
-            }else{
-                let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
-                parentView.addSubview(newCardView)
+        if(addAllCards){
+            for i in 1...cardsInHand.count{
+                if(i==1){
+                    let newCardView : UIView = helper.createCardSubView(x , y:0,width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
+                    parentView.addSubview(newCardView)
+                    tempSubViews.append(newCardView)
+                    continue
+                }else{
+                    let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
+                    tempSubViews.append(newCardView)
+                    parentView.addSubview(newCardView)
+                }
             }
         }
-        //}
-        //        else{
-        //            var lastIndex = cardsInHand.count
-        //            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[lastIndex-1]))
-        //            parentView.addSubview(newCardView)
-        //        }
+        else{
+            var lastIndex = cardsInHand.count
+            let newCardView : UIView = helper.createCardSubView(x + (CGFloat(lastIndex)*xoffSet) , y:y + (CGFloat(lastIndex)*yoffSet),width:width,height:length,imageName : "card"+String(cardsInHand[lastIndex-1]))
+            tempSubViews.append(newCardView)
+            parentView.addSubview(newCardView)
+        }
     }
     
     
