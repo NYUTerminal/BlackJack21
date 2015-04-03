@@ -47,6 +47,9 @@ class ViewController: UIViewController {
     
     var bet2 = 0
     
+    var width = CGFloat(0)
+    
+    var length = CGFloat(0)
     
     // GUI things
     
@@ -57,6 +60,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var dealerHandView: UIView!
     @IBOutlet weak var cardContainerView: UIView!
     var backUpPlayerCard1View = UIView()
+    @IBOutlet weak var dividerView: UIView!
     var backUpPlayerCard2View = UIView()
     var playerHandViewBackUP = UIView()
     //
@@ -64,6 +68,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         playerHandViewBackUP  = playerHandView;
         super.viewDidLoad()
+        if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+            width = 50
+            length = 75
+        }else{
+            width = 120
+            length = 170
+        }
         clearedPlayerVIew1 = playerHandView
         // ViewControllerHelper.createCardSubView(ViewControllerHelper)
         //aiHandView
@@ -82,21 +93,27 @@ class ViewController: UIViewController {
             if(hand.handStatus == HandStatus.Turn){
                 var newCard = deck.getACardFromDeck()
                 hand.cardsInHand.append(newCard)
+                println("hand.handSum : ")
+                println(hand.handSum)
                 if(i==1){
-                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: true, currentView: playerCard1View , addAllCards: false)
+                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: true, currentView: dividerView , addAllCards: false)
                 }else{
-                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: playerCard2View , addAllCards: false)
+                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: dividerView , addAllCards: false)
                 }
                 if(hand.handSum == 21){
                     playerList[i-1].hand.handStatus = HandStatus.BlackJack
                     //showViewItems()
+                    doBalanceChanges(playerList[i-1],isPlayerWon : true)
                     if(i != noOfPlayersInGame){
                         playerList[i].hand.handStatus = HandStatus.Turn
+                    }else if (i == noOfPlayersInGame){
+                        dealerTurn()
                     }
                     return
                 }else if(hand.handSum>21){
                     playerList[i-1].hand.handStatus = HandStatus.Busted
                     //showViewItems()
+                    doBalanceChanges(playerList[i-1],isPlayerWon : false)
                     if(i != noOfPlayersInGame){
                         playerList[i].hand.handStatus = HandStatus.Turn
                     }else if (i == noOfPlayersInGame){
@@ -138,6 +155,10 @@ class ViewController: UIViewController {
     
     @IBAction func deal(sender: UIButton) {
         clearAllItemsOnScreen()
+        if(player1Bet.text == "0 (Total Bet)" || player2Bet.text == "0 (Total Bet)"){
+            gameState.text = "Please input Bet"
+            return
+        }
         if numberOfGamesPlayed%5 == 0 {
             deck.buildDeck(numberOfDecks)
         }
@@ -155,8 +176,8 @@ class ViewController: UIViewController {
         //Initializing with for loop . Based on number of players
         dealer.initializeDealer()
         numberOfGamesPlayed++;
+        initialize()
         for i in 1...noOfPlayersInGame {
-            initialize()
             var playerHand = playerList[i-1].hand
             validations(playerList[i-1])
         }
@@ -168,7 +189,17 @@ class ViewController: UIViewController {
         for i in 1...noOfPlayersInGame {
             var player = Player()
             player.initializeHand()
-            //player.hand.bet = getBet(i-1)
+            var bet:Int? = 0
+            println(player1Bet.text)
+            
+            if(i == 1){
+                bet = player1Bet.text?.toInt()
+                player.hand.bet = bet!
+            }else{
+                bet = player2Bet.text?.toInt()
+                player.hand.bet = bet!
+            }
+            
             if(i==1){
                 player.hand.handStatus = HandStatus.Turn
             }else{
@@ -178,40 +209,6 @@ class ViewController: UIViewController {
         }
     }
     
-    //    func getBet(index : Int) -> Int {
-    //        switch index{
-    //        case 1:
-    //            return player1Bet.text.toInt()!
-    //        case 2:
-    //            return player2Bet.text.toInt()!
-    //        case 3:
-    //            return player3Bet.text.toInt()!
-    //        case 4:
-    //            return player4Bet.text.toInt()!
-    //        case 5:
-    //            return player5Bet.text.toInt()!
-    //        default:
-    //            return 0
-    //        }
-    //    }
-    
-    
-    //    func getLabelsOnIndex(index : Int) -> UILabel {
-    //        switch index{
-    //        case 1:
-    //            return player1Cards
-    //        case 2:
-    //            return player2cards
-    //        case 3:
-    //            return player3Cards
-    //        case 4:
-    //            return player4Cards
-    //        case 5:
-    //            return player5Cards
-    //        default:
-    //            return player1Cards
-    //        }
-    //    }
     
     func showViewItems(){
         var index:Int = 1;
@@ -219,10 +216,12 @@ class ViewController: UIViewController {
         for i = noOfPlayersInGame; i > 0; i-- {
             var hand = playerList[i-1].hand
             if(i==1){
-                addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : true,currentView : playerCard1View,addAllCards:true)
+                addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : true,currentView : dividerView,addAllCards:true)
+                balance1.text = String(playerList[i-1].balance)
             }
             else{
-                addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : false,currentView :playerCard2View,addAllCards:true)
+                addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : false,currentView :dividerView,addAllCards:true)
+                balance2.text = String(playerList[i-1].balance)
             }
             //if(hand.handStatus == HandStatus.BlackJack || hand.handStatus == HandStatus.Busted || hand.handStatus == HandStatus.Turn || hand.handStatus == HandStatus.Stand){
             // gameState.text = gameState.text! + String(i) + ": "+hand.handStatus.rawValue+","
@@ -246,7 +245,6 @@ class ViewController: UIViewController {
         let y = dealerCard1View.frame.origin.y
         let helper = ViewControllerHelper()
         println(dealer.dealerHand)
-        println("testing bahhhhhhhh")
         for i in 1...dealer.dealerHand.count{
             if(i==1){
                 if(showFullCards){
@@ -267,17 +265,27 @@ class ViewController: UIViewController {
     }
     
     func clearAllItemsOnScreen() {
+        //        if(playerHandView.subviews.count>2){
+        //            playerList[i].hand.cardsInHand.count
+        //            playerHandView.subviews[]
+        //            for i in 1...playerList.count{
+        //                if(playerList[i].hand.cardsInHand.count>0){
+        //                    for j in 1...playerList[i].hand.cardsInHand.count{
+        //                        if(j != 1){
+        //                            playerHandView.subviews[] = nil
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        for view in self.view.subviews {
+            println(view)
+        }
         //for i in 1...5{
         playerList = []
         //getLabelsOnIndex(i).text = ""
         //dealerCards.text = ""
         dealer = Dealer()
-        //            player1Bet.text = ""
-        //            player2Bet.text = ""
-        //            player3Bet.text = ""
-        //            player4Bet.text = ""
-        //            player5Bet.text = ""
-        //}
         
     }
     
@@ -311,7 +319,7 @@ class ViewController: UIViewController {
                 continue
             }
             
-            if(dealerSum > playerHand.hand.handSum && playerHand.hand.handStatus == HandStatus.Stand){
+            if(dealerSum > playerHand.hand.handSum){
                 playerHand.hand.handStatus =  HandStatus.Lost
                 doBalanceChanges(playerHand,isPlayerWon : false)
             }else if dealerSum < playerHand.hand.handSum && playerHand.hand.handStatus == HandStatus.Stand {
@@ -323,6 +331,7 @@ class ViewController: UIViewController {
             }
             
         }
+        showViewItems()
         showDealerCards(true)
     }
     
@@ -338,28 +347,30 @@ class ViewController: UIViewController {
     func addCardsToView(cardsInHand :[Int] ,parentView : UIView,isPlayerView : Bool, currentView :UIView,addAllCards : Bool){
         var xoffSet : CGFloat = 0
         var yoffSet : CGFloat = 0
-        var currentStart = currentView.frame.size
-        if(isPlayerView){
-            xoffSet = CGFloat(25)
-            yoffSet = CGFloat(25)
-        }else{
-            xoffSet = CGFloat(-25)
-            yoffSet = CGFloat(25)
-        }
-        var width1 = currentStart.width
-        var height1 = currentStart.height
         var x = currentView.frame.origin.x
         var y = currentView.frame.origin.y
+        var currentStart = currentView.frame.size
+        
+        if(isPlayerView){
+            xoffSet = CGFloat(15)
+            yoffSet = CGFloat(15)
+            x = x + CGFloat(20)
+            y = y + CGFloat(0)
+        }else{
+            x = x - width
+            xoffSet = CGFloat(-15)
+            yoffSet = CGFloat(15)
+        }
         
         let helper = ViewControllerHelper()
         //if(addAllCards){
         for i in 1...cardsInHand.count{
             if(i==1){
-                let newCardView : UIView = helper.createCardSubView(x , y:0,width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
+                let newCardView : UIView = helper.createCardSubView(x , y:0,width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
                 parentView.addSubview(newCardView)
                 continue
             }else{
-                let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width1,height:height1,imageName : "card"+String(cardsInHand[i-1]))
+                let newCardView : UIView = helper.createCardSubView(x + (CGFloat(i)*xoffSet) , y:y + (CGFloat(i)*yoffSet),width:width,height:length,imageName : "card"+String(cardsInHand[i-1]))
                 parentView.addSubview(newCardView)
             }
         }
