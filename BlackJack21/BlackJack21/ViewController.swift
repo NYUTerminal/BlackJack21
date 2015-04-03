@@ -47,6 +47,9 @@ class ViewController: UIViewController {
     
     var bet2 = 0
     
+    @IBOutlet weak var aiSum: UILabel!
+    @IBOutlet weak var dealerSum: UILabel!
+    @IBOutlet weak var playerSum: UILabel!
     var width = CGFloat(0)
     
     var length = CGFloat(0)
@@ -62,7 +65,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var playerCard2View: UIImageView!
     @IBOutlet weak var dealerCard1View: UIImageView!
     @IBOutlet weak var dealerHandView: UIView!
-    @IBOutlet weak var cardContainerView: UIView!
+    
     var backUpPlayerCard1View = UIView()
     @IBOutlet weak var dividerView: UIView!
     var backUpPlayerCard2View = UIView()
@@ -96,6 +99,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func hit(sender: UIButton) {
+        clearCards()
         for i in 1...noOfPlayersInGame{
             var hand = playerList[i-1].hand
             if(hand.handStatus == HandStatus.Turn){
@@ -106,7 +110,18 @@ class ViewController: UIViewController {
                 if(i==1){
                     addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: true, currentView: dividerView , addAllCards: false)
                 }else{
-                    addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: dividerView , addAllCards: false)
+                    hand = playerList[i].hand
+                    //AI Part of Second PLayer
+                    while(hand.handSum<16){
+                        hand.cardsInHand.append(deck.getACardFromDeck())
+                        //  addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: dividerView , addAllCards: false)
+                    }
+                    if(hand.handSum>21){
+                        hand.handStatus = HandStatus.Busted
+                    }else{
+                        hand.handStatus = HandStatus.Stand
+                    }
+                    dealerTurn()
                 }
                 if(hand.handSum == 21){
                     playerList[i-1].hand.handStatus = HandStatus.BlackJack
@@ -123,8 +138,12 @@ class ViewController: UIViewController {
                     //showViewItems()
                     doBalanceChanges(playerList[i-1],isPlayerWon : false)
                     if(i != noOfPlayersInGame){
-                        playerList[i].hand.handStatus = HandStatus.Turn
-                    }else if (i == noOfPlayersInGame){
+                        hand = playerList[i].hand
+                        while(hand.handSum<16){
+                            hand.cardsInHand.append(deck.getACardFromDeck())
+                            //  addCardsToView(hand.cardsInHand, parentView: playerHandView, isPlayerView: false, currentView: dividerView , addAllCards: false)
+                        }
+                        hand.handStatus = HandStatus.Stand
                         dealerTurn()
                     }
                     return
@@ -137,15 +156,23 @@ class ViewController: UIViewController {
     
     
     @IBAction func stand(sender: UIButton) {
+        clearCards()
         var allPlayersAreDonePlaying = true
         for i in 1...noOfPlayersInGame{
             var hand = playerList[i-1].hand
             if(hand.handStatus == HandStatus.Turn){
                 hand.handStatus = HandStatus.Stand
                 if(i != noOfPlayersInGame){
-                    playerList[i].hand.handStatus = HandStatus.Turn
+                    hand = playerList[i].hand
+                    while(hand.handSum<16){
+                        hand.cardsInHand.append(deck.getACardFromDeck())
+                    }
+                    if(hand.handSum>21){
+                        hand.handStatus = HandStatus.Busted
+                    }else{
+                        hand.handStatus = HandStatus.Stand
+                    }
                 }
-                break
             }
         }
         for i in 1...noOfPlayersInGame{
@@ -164,7 +191,7 @@ class ViewController: UIViewController {
     @IBAction func deal(sender: UIButton) {
         clearAllItemsOnScreen()
         if(player1Bet.text == "0 (Total Bet)" || player2Bet.text == "0 (Total Bet)"){
-            gameState.text = "Please input Bet"
+            gameState.text = "Please input Bet and Deal!!"
             return
         }
         if numberOfGamesPlayed%5 == 0 {
@@ -215,10 +242,12 @@ class ViewController: UIViewController {
         for i = noOfPlayersInGame; i > 0; i-- {
             var hand = playerList[i-1].hand
             if(i==1){
+                playerSum.text = String(hand.handSum)
                 addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : true,currentView : dividerView,addAllCards:true)
                 balance1.text = String(playerList[i-1].balance)
             }
             else{
+                aiSum.text = String(hand.handSum)
                 addCardsToView(hand.cardsInHand, parentView: playerHandView,isPlayerView : false,currentView :dividerView,addAllCards:true)
                 balance2.text = String(playerList[i-1].balance)
             }
@@ -246,6 +275,7 @@ class ViewController: UIViewController {
         for i in 1...dealer.dealerHand.count{
             if(i==1){
                 if(showFullCards){
+                    dealerSum.text = String(dealer.dealerCardsSum)
                     let newCardView : UIView = helper.createCardSubView(x , y:y,width:width1,height:height1,imageName : "card"+String(dealer.dealerHand[i-1]))
                     dealerHandView.addSubview(newCardView)
                     continue
@@ -263,6 +293,19 @@ class ViewController: UIViewController {
     }
     
     func clearAllItemsOnScreen() {
+        
+        clearCards()
+        //for i in 1...5{
+        playerList = []
+        tempSubViews = []
+        //getLabelsOnIndex(i).text = ""
+        //dealerCards.text = ""
+        dealer = Dealer()
+        gameState.text = ""
+        
+    }
+    
+    func clearCards(){
         var index = 0
         if tempSubViews.count > 0{
             for subUIView in playerHandView.subviews as [UIView] {
@@ -280,13 +323,6 @@ class ViewController: UIViewController {
             }
             subUIView.removeFromSuperview()
         }
-        
-        //for i in 1...5{
-        playerList = []
-        tempSubViews = []
-        //getLabelsOnIndex(i).text = ""
-        //dealerCards.text = ""
-        dealer = Dealer()
         
     }
     
@@ -309,6 +345,7 @@ class ViewController: UIViewController {
         println("dealer Card sum after stand \(dealer.dealerCardsSum)")
         println("dealer Cards \(dealer.dealerHand)")
         var dealerSum = dealer.dealerCardsSum
+        var num = 1
         for playerHand in playerList{
             
             if(dealerSum > 21){
@@ -321,16 +358,18 @@ class ViewController: UIViewController {
             }
             
             if(dealerSum > playerHand.hand.handSum){
+                gameState.text = gameState.text! + "player\(num) lost. "
                 playerHand.hand.handStatus =  HandStatus.Lost
                 doBalanceChanges(playerHand,isPlayerWon : false)
             }else if dealerSum < playerHand.hand.handSum && playerHand.hand.handStatus == HandStatus.Stand {
+                gameState.text = gameState.text! + "player\(num) won "
                 playerHand.hand.handStatus =  HandStatus.Won
                 doBalanceChanges(playerHand,isPlayerWon : true)
             }else{
                 playerHand.hand.handStatus =  HandStatus.Statue
                 //No balance change incase of draw
             }
-            
+            num++
         }
         showViewItems()
         showDealerCards(true)
