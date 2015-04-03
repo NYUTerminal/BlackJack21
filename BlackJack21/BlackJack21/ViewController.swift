@@ -81,6 +81,8 @@ class ViewController: UIViewController {
             length = 170
             offSet = 30
         }
+        balance1.text = "100"
+        balance2.text = "100"
         clearedPlayerVIew1 = playerHandView
         // ViewControllerHelper.createCardSubView(ViewControllerHelper)
         //aiHandView
@@ -166,20 +168,9 @@ class ViewController: UIViewController {
             return
         }
         if numberOfGamesPlayed%5 == 0 {
+            println("Shuffled Deck since 5 games are over")
             deck.buildDeck(numberOfDecks)
         }
-        //        for i in 1...playerHandView.subviews.count-1 {
-        //            println(playerHandView.subviews[i])
-        //            //playerHandView.subviews[i]=nil
-        //        }
-        //
-        //        for subview in playerHandView.subviews {
-        //                println(subview)
-        //                subview.removeFromSuperview()
-        //        }
-        //        playerHandView.addSubview(backUpPlayerCard1View)
-        //        playerHandView.addSubview(backUpPlayerCard2View)
-        //Initializing with for loop . Based on number of players
         dealer.initializeDealer()
         numberOfGamesPlayed++;
         initialize()
@@ -196,14 +187,16 @@ class ViewController: UIViewController {
             var player = Player()
             player.initializeHand()
             var bet:Int? = 0
-            println(player1Bet.text)
-            
             if(i == 1){
                 bet = player1Bet.text?.toInt()
                 player.hand.bet = bet!
+                let balance = balance1.text?.toInt()
+                player.balance = balance!
             }else{
                 bet = player2Bet.text?.toInt()
                 player.hand.bet = bet!
+                let balance = balance2.text?.toInt()
+                player.balance = balance!
             }
             
             if(i==1){
@@ -244,7 +237,6 @@ class ViewController: UIViewController {
         let xoffSet : CGFloat = CGFloat(20)
         let yoffSet : CGFloat = CGFloat(0)
         let dealerFrame = dealerCard1View.frame.size
-        println(dealerFrame)
         let width1 = dealerFrame.width
         let height1 = dealerFrame.height
         let x = dealerCard1View.frame.origin.x
@@ -281,6 +273,14 @@ class ViewController: UIViewController {
                 }
             }
         }
+        for subUIView in dealerHandView.subviews as [UIView] {
+            if(index == 0 ){
+                index++
+                continue
+            }
+            subUIView.removeFromSuperview()
+        }
+        
         //for i in 1...5{
         playerList = []
         tempSubViews = []

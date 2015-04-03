@@ -41,9 +41,7 @@ class Deck {
         var temp: Int
         for i in 0...(deck.count-1) {
             let j = Int(arc4random_uniform(UnicodeScalarValue(deck.count)))
-            println(j)
             temp = deck[i]
-            println(i,j)
             deck[i]=deck[j]
             deck[j]=temp
             
